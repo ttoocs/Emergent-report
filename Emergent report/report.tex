@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+\addtolength{\oddsidemargin}{-2cm}
+\addtolength{\evensidemargin}{-2cm}
+\addtolength{\textwidth}{4cm}
+
+\addtolength{\topmargin}{-2cm}
+\addtolength{\textheight}{3cm}
+
+\usepackage{algorithm2e}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{gensymb}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{ragged2e}
+
+\usepackage{float}
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+
+\setenumerate[1]{label=(\arabic*)}
+
+\SetKwRepeat{Do}{do}{while}%
+\begin{document}
+
+\thispagestyle{empty}
+\begin{titlepage}
+	\null\vfill
+	
+	\begin{center}
+		
+		{\Huge Cammot-Boids Prroject Report}
+		\vskip 2cm
+		
+		{\large CPSC 565 University of Calgary}
+	\end{center}
+	
+	\vfill
+	\vfill
+	
+	\begin{tabular}{r}
+		Camilo Talero\ \\
+		Scott Saunders\    
+	\end{tabular}
+	\hfill
+\end{titlepage}
+
+	
+\newpage
+\clearpage
+\setcounter{page}{1}
+
+\section*{Abstract}
+
+\indent We implemented a semi-interactive C++ program that displays flocks of simple agents (called Boids in honour of the original paper by Craig Reynolds). The program uses user editable text files to create different groups of Boids with different behaviours, and spawns obstacles, represented as spheres, that the Boids must avoid. Boids can also be controlled by the user through the mouse by clicking and positioning the cursor on the desired destination. 
+\\ \\
+Boids are governed by the 3 rules originally described by Reynolds (cohesion, separation and alignment). Cohesion is the desire of each Boid to go to the average position of it's neighbours in a certain range; separation is the desire of the agents to prevent collisions by moving away from neighbours that are very close to them; alignment is the desire to match the general heading of a set of neighbours on a specific range. Certain modifications were also added, such as the addition of a field of view. Each rule is independent and each can be configured in real time through a text file. 
+\\ \\
+Boids are a good example of emergent systems, since each agent is very simplistic in nature, yet complex behaviours can be achieved through modifications of a small set of parameters. They are the basis for many swarm simulations, such as the award winning film Batman Begins, which was acclaimed because of it's use of computer swarm simulations to create groups of bats.
+
+\section{Overview}
+\subsection{Rules}
+\subsubsection{Separation}
+
+\section{Implementation}
+
+\section{Results}
+\end{document}
