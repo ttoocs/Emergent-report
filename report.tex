@@ -43,7 +43,7 @@
 	
 	\begin{center}
 		
-		{\Huge Cammot-Boids Prroject Report}
+		{\Huge Cammott-Boids Project Report}
 		\vskip 2cm
 		
 		{\large CPSC 565 University of Calgary}
@@ -100,11 +100,11 @@ This is an additional rule that allows the user to herd a flock towards/away to/
 \\ \\
 If the user presses the left mouse button, the average position of the flock is approximated by sampling 20 Boids from the current flock. The current position of the mouse is then projected onto the 3D world with the same depth as this approximated position. All Boids in the current flock then accelerate towards this projected point, until the user let's go of the button.
 \\ \\
-If the user presses the righ mouse button, similar calculations are performed, except the Boid gets repelled from the projected point.
+If the user presses the right mouse button, similar calculations are performed, except the Boid gets repelled from the projected point.
 \subsubsection{Keep Territory}
 This rule creates a territory for the flocks (same for all flocks, but could be implemented so that it is flock specific int he future). This creates a desire for all flocks to avoid going too far away from the starting position. There is 1 parameter associated with this rule.
 \\ \\
-\textbf{radius} determines the radius of a territory sphere centered at the origin $O=(0,0,0)$. If a Boid wanders outside this territory (i.e the length of it's position radius exceeds radius), It will ignore all other rules and will accelerate towards the origin. This essentially ensures that neither Boids nor flocks stray into infinity.
+\textbf{radius} determines the radius of a territory sphere centres at the origin $O=(0,0,0)$. If a Boid wanders outside this territory (i.e the length of it's position radius exceeds radius), It will ignore all other rules and will accelerate towards the origin. This essentially ensures that neither Boids nor flocks stray into infinity.
 
 \subsubsection{Collision Avoidance}
 This rule ensures Boids won't collide with the spherical obstacles added to the world. There are no user-editable parameters associated with this  rule.
@@ -114,7 +114,7 @@ If a Boid passes a thresh hold distance (not user configurable) it will get repe
 \subsection{Additional parameters}
 \begin{itemize}
 	\item \textbf{BoidNum}: the number of Boids of the flock.
-	\item \textbf{color}: the color of the Boids in the flock (purely for aesthetical purposes).
+	\item \textbf{color}: the color of the Boids in the flock (purely for aesthetic purposes).
 	\item \textbf{center}: not fully implemented, no behaviour. Once implemented, determines the center of the territory of the flock.
 	\item \textbf{maxAcceleration}: this parameter prevents the Boids from changing their velocity too fast. The current magnitude of the acceleration experienced by a Boid may never exceed \textbf{maxAcceleration}. If it does the net acceleration's magnitude gets changed accordingly so that it becomes \textbf{maxAcceleration}.
 	\item \textbf{maxVelocity}: this parameter prevents the Boids from reaching velocities that are too fast. Same as with acceleration, if the velocity vector's magnitude of a Boid would exceed this value, it gets changed accordingly so as to not exceed it. 
@@ -123,12 +123,12 @@ If a Boid passes a thresh hold distance (not user configurable) it will get repe
 \section{Implementation}
 The entire project was coded using C++ and OpenGL to render the objects. The additional use of the GLM and GLEW libraries was also used, both for rendering and simulation purposes. There will be no discussion about the implementation of the basic rules described on the Overview, as this has been widely discussed in other places. For an example of a possible pseudo-code of each rule please refer to: \url{http://www.kfish.org/Boids/pseudocode.html}.
 \\ \\
-We profited from the multi-paradigmic nature of C++ and used booth it's procedural programming and object orientation aspects to structure the simulation. In particular, the simulation itself is run as a procedural program, and there is no object orientation neither on the main cpp file nor on the main loop of the program. However flocks, Boids, and collision objects were all represented as cpp objects with their respective header files. And all behaviour of their behavoiur was encoded as member functions of their class representations (e.g the behaviour rules are functions inside the Boid class). 
+We profited from the multi-paradigmatic nature of C++ and used booth it's procedural programming and object orientation aspects to structure the simulation. In particular, the simulation itself is run as a procedural program, and there is no object orientation neither on the main cpp file nor on the main loop of the program. However flocks, Boids, and collision objects were all represented as cpp objects with their respective header files. And all behaviour of their behaviour was encoded as member functions of their class representations (e.g the behaviour rules are functions inside the Boid class). 
 
 \subsection{Optimization Techniques}
-The most important optimization technique implemented was a technique to voxelize the space using a hash table. A cube of side length \textbf{radius} (a cube capable of containing the territory sphere) is created. This space is then voxelized and all Boids are mapped to the voxel they lie on. Each voxel is then hashed using the the $i,j,k$ values of it's front, lower, left corner.
+The most important optimization technique implemented was a technique to sub divide the space using a hash table. A cube of side length \textbf{radius} (a cube capable of containing the territory sphere) is created. This space is then voxelized and all Boids are mapped to the voxel they lie on. Each voxel is then hashed using the the $i,j,k$ values of it's front, lower, left corner.
 \\ \\
-\noindent The following code snippets show the functions directly involved with the space hashing. The hash table is represented as a vector of vectors of Boid pointers, since each bucket in the hasTable msut contain all Boids inside the voxel mapped to that position on the hash table. Each flock has it's own hash table, included in it's class definition.
+\noindent The following code snippets show the functions directly involved with the space hashing. The hash table is represented as a vector of vectors of Boid pointers, since each bucket in the hash table must contain all Boids inside the voxel mapped to that position on the hash table. Each flock has it's own hash table, included in it's class definition.
 
 \begin{minipage}[t]{\textwidth}
 \begin{lstlisting}[language=C++]
@@ -183,12 +183,12 @@ Although the worst case running time of the previous algorithm is $O(n^2)$, the 
 
 Two further optimization techniques were implemented. 
 \\ \\
-The first, was to  parallelize the simulation using linux pthreads when updating the Boids. The number of concurrent threads is guaranteed to be the maximum number of concurrent threads that can run simultaneously on the current CPU (machine independent). Instead of updating each Boid on one thread, the Boids get separated into \textit{number of concurrent threads} equal sized partitions and each thread updates only those Boids associated to it. So all threads may read the information of any Boid, but can only write to those Boids associated to it, thus ensuring not 2 threads overwrite the same location in memory.
+The first, was to  parallelize the simulation using   pthreads when updating the Boids. The number of concurrent threads is guaranteed to be the maximum number of concurrent threads that can run simultaneously on the current CPU (machine independent). Instead of updating each Boid on one thread, the Boids get separated into \textit{number of concurrent threads} equal sized partitions and each thread updates only those Boids associated to it. So all threads may read the information of any Boid, but can only write to those Boids associated to it, thus ensuring not 2 threads overwrite the same location in memory.
 \\ \\
-The second was to increment CPU time by requesting a higher priority to the operating system. If the prgram is run with administration priviledges (e,g run with the use of sudo in Ubuntu) it will request the operating system to give it the maximum priority (-20). Depending on the CPU load this may have little to no impact on the system however. The priority with which the program is running is displayed on the console at the beginning of the execution.
+The second was to increment CPU time by requesting a higher priority to the operating system. If the program is run with administration privileges (e,g run with the use of sudo in Ubuntu) it will request the operating system to give it the maximum priority (-20). Depending on the CPU load this may have little to no impact on the system however. The priority with which the program is running is displayed on the console at the beginning of the execution.
 \\ \\
 This optimization techniques allowed us to have up to 10 000 Boids in 1 flock, with acceptable lag.
-It is however recommended to keep the number of Boids at around 5000 to prevent unexpected lag when a large numebr of Boids clusters together.
+It is however recommended to keep the number of Boids at around 5000 to prevent unexpected lag when a large number of Boids clusters together.
 
 \subsection{Mathematical Model}
 \subsubsection{Physics and Numerical Integration}
@@ -206,7 +206,7 @@ $$X_{t+\Delta t} = X_t + (X_t-X_{t_{past}})\cdot(\frac{\Delta t}{\Delta t_{past}
 Where the \textit{past} subscript denotes the value of that variable on the previous time step\\
 $t_{past}=t-\Delta t$, and $X_t$ denotes the position of the Boid at time $t$.
 \\ \\
-Similarily, we update the velocity of the Boid to be: 
+Similarly, we update the velocity of the Boid to be: 
 $$v_{t+\Delta t} = \frac{X_{t+\Delta t} - X_{t_{past}}}{2\Delta t}$$
 
 The choice of this specific numerical integration approach was not arbitrary. This Verlet integration approach does not require a constant time step, making it very suitable for real-time simulations, since, ideally, if the CPU lags, the simulation does not lag along with it, but rather it gets updated based on the real time value of $t$, calculated since the beginning of the execution of the program. The downside is that, due to the nature of numerical integration, a significant lag in the computer may lead to big errors in calculations.
@@ -215,7 +215,7 @@ The choice of this specific numerical integration approach was not arbitrary. Th
 The reader may have noted that updating each Boid one after the other creates an error in the simulation, that propagates and becomes larger which each new updated void. Simply, if on a given time step $t$ a Boid's position is changed, then all Boids that depended on this Boid are affected as well (e.g imagine a Boid moves away form the visual range of one of it's neighbours before they neighbour is updated, then the neighbour will not behave appropriately based on the state of the world on the current time step). To avoid this the above calculations are performed for each Boid and the results are stored.  Each Boid is then updated after all calculations are performed. This prevents the error propagation described above.
 
 \subsubsection{Boid Orientation}
-Since this simulation focuses on visual aspects, it is important that the Boids behave in a seemingly natural way. To ensure that each Boid faces in teh direction of it's velocity, the approach is quite simple. We take the current heading of the Boid and it's current velocity and normalize both. Then we cross product the 2 to obtain the normal to the plain containing the 2 vectors, and we finally rotate the geometry of the Boid, around this normal by the angle in between the 2 vectors. More formally:
+Since this simulation focuses on visual aspects, it is important that the Boids behave in a seemingly natural way. To ensure that each Boid faces in the direction of it's velocity, the approach is quite simple. We take the current heading of the Boid and it's current velocity and normalize both. Then we cross product the 2 to obtain the normal to the plain containing the 2 vectors, and we finally rotate the geometry of the Boid, around this normal by the angle in between the 2 vectors. More formally:
 
 $$\hat{n}=\vec{d}\times \vec{v}$$
 $$\theta = acos(\vec{d}\cdot\vec{v})$$
@@ -230,13 +230,13 @@ Each Boid has a color in order to identify which flock it belongs to, so as to m
 \\ \\
 At the beginning of the simulation, all Boids are evenly distributed across the space. There are no clusters nor groups of Boids on the very first moments of the simulation. However, we can see that, as time progresses, Boids of matching color (i.e Boids belonging to the same flock) Have a tendency of grouping together, and we can easily see clear, distinct Boid congregations appear over time. 
 \\ \\
-Moreover, it is evident to the viewer, that, given the parameters provided with the original simulation (the original text files of the simulation before any modification by the user) Each color of Boid (each flock) has it's own unique behaviour, even if some are similar. On this set of parameters (available on a Github repository of the project, provided at the end of this document) we can describe the following behaviours per color.
+Moreover, it is evident to the viewer, that, given the parameters provided with the original simulation (the original text files of the simulation before any modification by the user) Each color of Boid (each flock) has it's own unique behaviour, even if some are similar. On this set of parameters (available on a GitHub repository of the project, provided at the end of this document) we can describe the following behaviours per color.
 \begin{itemize}
 	\item Orange: creates groups of Boids that move in the same general direction. Individual Boids exhibit a an occasional "twitch".
 	
 	\item Green: similar to orange, but no "twitch".
 	
-	\item Light Cyan: "Exploding" behaviour. Boids converge to the same position and then proceed to get away from it, and then they converge to the central position again. The Boid distribution itself inside a group is mediumly sparsed.
+	\item Light Cyan: "Exploding" behaviour. Boids converge to the same position and then proceed to get away from it, and then they converge to the central position again. The Boid distribution itself inside a group is equally spaced.
 	
 	\item Dark Blue: similar to white sometimes. However it can also create cycles (Boids orbit around a certain point) and lines (Boids follow a "leader" in a straight line).
 	
@@ -246,7 +246,7 @@ Moreover, it is evident to the viewer, that, given the parameters provided with 
 Based on the number of Boids achieved and the different emergent behaviours that depend solely on the described set of parameters, the simulation seems satisfactory.
 
 \subsection*{Future Modifications}
-2 main goals were not implemented due to time constraints. The first was to add a large predator with a different set of rules, in order to display a predator prey relationship. The second was to make the Boids have a realistic mesh (bird, fish, dragon...) and use B-Spline interpolation to animate their movement in a natural looking fashion (this is not related to emergent behaviour, adn, as such, was left as a last priority).
+%Two strech goals were not implemented due to time constraints. The first was to add a large predator with a different set of rules, in order to display a predator prey relationship. The second was to make the Boids have a realistic mesh (bird, fish, dragon...) and use B-Spline interpolation to animate their movement in a natural looking fashion (this is not related to emergent behaviour, and, as such, was left as a last priority).
 
 \section*{References}
 
