@@ -74,6 +74,7 @@ Boids are a good example of emergent systems, since each agent is very simplisti
 
 \section{Overview}
 \subsection{Basic Rules}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{rules.png}
 \subsubsection{Separation}
 The separation rule governs the desire to avoid collisions of the Boids. There are 2 parameters that directly affect this rule.
 \\ \\
@@ -226,7 +227,9 @@ Each Boid has a color in order to identify which flock it belongs to, so as to m
 \\ \\
 At the beginning of the simulation, all Boids are evenly distributed across the space. There are no clusters nor groups of Boids on the very first moments of the simulation. However, we can see that, as time progresses, Boids of matching color (i.e Boids belonging to the same flock) Have a tendency of grouping together, and we can easily see clear, distinct Boid congregations appear over time. 
 \\ \\
-Moreover, it is evident to the viewer, that, given the parameters provided with the original simulation (the original text files of the simulation before any modification by the user) Each color of Boid (each flock) has its own unique behaviour, even if some are similar. On this set of parameters (available on a GitHub repository of the project, provided at the end of this document) we can describe the following behaviours per color.
+Moreover, it is evident to the viewer, that, given the parameters provided with the original simulation (the original text files of the simulation before any modification by the user) Each color of Boid (each flock) has its own unique behaviour, even if some are similar. On this set of parameters (available on a GitHub repository of the project, provided at the end of this document) we can describe the following behaviours per color. \\
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{small.png}
+\\
 \begin{itemize}
 	\item Orange: creates groups of Boids that move together as a whole, but each Boid still moves about.
 	
@@ -240,6 +243,7 @@ Moreover, it is evident to the viewer, that, given the parameters provided with 
 \end{itemize}
 
 Based on the number of Boids achieved and the different emergent behaviours that depend solely on the described set of parameters, the simulation seems satisfactory.
+
 
 \subsection*{Future Modifications}
 Two stretch goals that were not yet implemented due to time constraints: A large predator with a different set of rules, in order to display a predator prey relationship. While the other was to make the Boids have a realistic mesh (bird, fish, dragon...) and use B-Spline interpolation to animate their movement in a natural looking fashion (this is not related to emergent behaviour, and, as such, was left as a last priority).
