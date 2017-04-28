@@ -75,19 +75,19 @@ Boids are a good example of emergent systems, since each agent is very simplisti
 \section{Overview}
 \subsection{Basic Rules}
 \subsubsection{Separation}
-\includegraphics{Rule_separation.png} 
+\includegraphics{Rule_separation.png} \\ 
 The separation rule governs the desire to avoid collisions of the Boids. There are 2 parameters that directly affect this rule.
 \\ \\
 The \textbf{sepRadius} parameter governs the radius of a sphere placed around the center of mass of the Boid that is used to determine which Boids affect the current Boid. The \textbf{sepCoeff} parameter governs the strength with which Boids repel each other. All Boids outside of this sphere will be ignored. The current Boid will calculate the average position of all Boids inside of its separation sphere of radius, \textbf{sepRadius}, and will attempt to move away from this position with an acceleration magnitude of \textbf{sepCoeff}.
 
 \subsubsection{Alignment}
-\includegraphics{Rule_alignment.png}
+\includegraphics{Rule_alignment.png} \\
 The alignment rule governs the desire of a Boid to match the general heading of its neighbours. There are 2 parameters that directly influence this rule.
 \\ \\
 The \textbf{alignmentRadius} parameter determines the radius of a sphere around the center of mass of the Boid that is used to determine which Boids affect the current Boid. The \textbf{alignmentCoeff} determines the strength of the force with which Boids accelerate to match the general heading of its neighbours. The current Boid will ignore all Boids outside of this sphere, it will then calculate the average heading of all Boids that are inside of its alignment sphere but outside of its separation sphere (which forces the alignment sphere to always be bigger than the separation sphere if this rule is to be applied) and then it will accelerate so that its heading matches that of its neighbours with a magnitude of \textbf{alignmentCoff}.
 
 \subsubsection{Cohesion}
-\includegraphics{Rule_cohesion.png}
+\includegraphics{Rule_cohesion.png} \\
 The cohesion rule governs the desire of a Boid to head towards the general position of its neighbours. There are 2 parameters that directly influence this rule.
 \\ \\
 The \textbf{cohesionRadius} determines the radius of the sphere around the center of mass of the Boid that is used to determine which Boids affect the current Boid. The \textbf{cohesionCoeff} parameter determines the magnitude of the force with which the current Boid  accelerates towards the average position of its neighbours inside of the cohesion sphere. All Boids outside the cohesion sphere as well as those inside the alignment or separation spheres will be ignored (forcing the radius of this sphere to be larger than that of the previous to for this rule to take effect).
@@ -260,6 +260,8 @@ Two stretch goals that were not yet implemented due to time constraints: A large
 	\item Conrad Parker, \url{http://www.kfish.org/boids/pseudocode.html}
 	
 	\item Wikipedia,  \url{https://en.wikipedia.org/wiki/Verlet_integration}
+	
+	\item Wikipedia,  \url{https://en.wikipedia.org/wiki/Boids}
 	
 	\item Open.gl, \url{https://open.gl/}
 \end{enumerate}
