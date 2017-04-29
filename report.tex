@@ -92,13 +92,13 @@ The \textbf{cohesionRadius} determines the radius of the sphere around the cente
 \subsubsection{Field of view}
 There is an additional rule that determines whether a Boid can see another Boid or not. If the current Boid cannot see a Boid, even if this Boid is inside any of the rule spheres (cohesion, alignment and separation) it will be ignored. There is only one parameter affecting this rule.
 \\ \\
-\textbf{FOV} determines the field of view of all Boids in a flock. The simplest way to abstract this rule is to imagine that inside each of the rule spheres described above, there is a conic hole of angle 360-\textbf{FOV}, any Boid that lies inside of this conic section will be ignored by the current Boid regardless of it's position.
+\textbf{FOV} determines the field of view of all Boids in a flock. The simplest way to abstract this rule is to imagine that inside each of the rule spheres described above, there is a conic hole of angle $(360 - \textbf{FOV})$, any Boid that lies inside of this conic section will be ignored by the current Boid regardless of it's position.
 
 \subsection{Additional rules}
 \subsubsection{Herding (attractive and repelling)}
 This is an additional rule that allows the user to herd a flock towards/away to/from a point through the use of the mouse. There are no user configurable parameters associated with this rule.
 \\ \\
-If the user presses the left mouse button, the average position of the flock is approximated by sampling every 20th Boid from the current flock. The current position of the mouse is then projected onto the 3D world with the same depth as this approximated position. All Boids in the current flock then accelerate towards this projected point, until the user let's go of the button.
+If the user presses the left mouse button, the average position of the flock is approximated by sampling 20 Boids from the current flock. The current position of the mouse is then projected onto the 3D world with the same depth as this approximated position. All Boids in the current flock then accelerate towards this projected point, until the user let's go of the button.
 \\ \\
 If the user presses the right mouse button, similar calculations are performed, except the Boid gets repelled from the projected point.
 \subsubsection{Keep Territory}
@@ -121,9 +121,9 @@ If a Boid passes a threshold distance (not user configurable) it will get repell
 \end{itemize}
 
 \section{Implementation}
-The entire project was coded using C++. The additional use of the OpenGL, GLM, and GLEW libraries are also used, both for rendering and simulation purposes. There will be no discussion about the implementation of the basic rules described on the Overview, as this has been widely discussed in other places. For an example of a possible pseudo-code of each rule please refer to: \url{http://www.kfish.org/Boids/pseudocode.html}.
+The entire project was coded using C++. The libraries OpenGL, GLM, and GLEW are also used, both for rendering and simulation purposes. There will be no discussion about the implementation of the basic rules described on the Overview, as this has been widely discussed in other places. For an example of a possible pseudo-code of each rule please refer to: \url{http://www.kfish.org/Boids/pseudocode.html}.
 \\ \\
-We profited from the multi-paradigmatic nature of C++ and used both it's procedural programming and object orientation aspects to structure the simulation. In particular, the simulation itself is run as a procedural program, and there is no object orientation neither on the main cpp file nor on the main loop of the program. However Flocks, Boids, and collision objects were all represented as cpp objects with their respective header files. And all behaviour of their behaviour was encoded as member functions of their class representations (e.g the behaviour rules are functions inside the Boid class). 
+We profited from the multi-paradigmatic nature of C++ and used both it's procedural programming and object orientation aspects to structure the simulation. In particular, the simulation itself runs as a procedural program, and there is no object orientation neither on the main cpp file nor on the main loop of the program. However Flocks, Boids, and collision objects were all represented as cpp objects with their respective header files. And all behaviour of their behaviour was encoded as member functions of their class representations (e.g the behaviour rules are functions inside the Boid class). 
 
 \subsection{Optimization Techniques}
 The most important optimization technique implemented was a technique to sub divide the space using a hash table. A cube of side length \textbf{radius} (a cube capable of containing the territory sphere) is created. This space is then sub-divided and all Boids are mapped to the sub-volume they lie on. Each sub-volume is then hashed using the the $i,j,k$ values of it's front, lower, left corner.
@@ -191,7 +191,7 @@ These optimization techniques allowed us to have up to 10 000 Boids in 1 flock, 
 
 \subsection{Mathematical Model}
 \subsubsection{Physics and Numerical Integration}
-In order to have a smooth and realistic looking simulation, our approach to simulate each Boid are based on physics. The abstraction is to consider each Boid as a particle that can be affected by certain physical forces. We assumed all Boids had the same mass thus we simplified Newton's second law of motion $F=ma$ to simply $F=a$ or in other words, Boids accelerate based exclusively on the forces being applied to them. Each of the rules discussed in the overview section generates a vector, representing a force that is to be applied to the current Boid. 
+In order to have a smooth and realistic looking simulation, our approach to simulate each Boid is based on physics. The abstraction is to consider each Boid as a particle that can be affected by certain physical forces. We assumed all Boids had the same mass thus we simplified Newton's second law of motion, $F=ma$, to simply $F=a$ or in other words, Boids accelerate based exclusively on the forces being applied to them. Each of the rules discussed in the overview section generates a vector, representing a force that is to be applied to the current Boid. 
 \\ \\
 At a given time $t$ this yields $a_t = \sum a_r$ where $a_t$ is the acceleration at time $t$ and $\{a_r\}$ is the set of all accelerations calculated by the behaviour rules. 
 \\ \\
